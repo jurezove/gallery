@@ -8,7 +8,6 @@
 
 #import "PhotoFetcher.h"
 #import "FlickrAPI.h"
-#import "FlickrPhoto.h"
 
 @implementation PhotoFetcher
 
@@ -34,7 +33,7 @@
 
 - (void)fetchFlickrImagesWithTags:(NSArray *)tags andPage:(NSInteger)page success:(PhotoFetcherSuccessBlock)successBlock error:(PhotoFetcherErrorBlock)errorBlock {
     [self GET:[FlickrAPI urlForSearch] parameters:[FlickrAPI paramsForSearchByTags:tags andPage:page] success:^(NSURLSessionDataTask *task, id responseObject) {
-        successBlock([FlickrPhoto photoArrayWithResponseDictionary:responseObject]);
+        successBlock([FlickrData dataWithResponseDictionary:responseObject]);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         errorBlock(task, error);
     }];
@@ -42,7 +41,7 @@
 
 - (void)fetchFlickrImagesWithTags:(NSArray *)tags withCoordinate:(CLLocationCoordinate2D)coordinate andPage:(NSInteger)page success:(PhotoFetcherSuccessBlock)successBlock error:(PhotoFetcherErrorBlock)errorBlock {
     [self GET:[FlickrAPI urlForSearch] parameters:[FlickrAPI paramsForSearchByTags:tags withCoordinate:coordinate andPage:page] success:^(NSURLSessionDataTask *task, id responseObject) {
-        successBlock([FlickrPhoto photoArrayWithResponseDictionary:responseObject]);
+        successBlock([FlickrData dataWithResponseDictionary:responseObject]);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         errorBlock(task, error);
     }];

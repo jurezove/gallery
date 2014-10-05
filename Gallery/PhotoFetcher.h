@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 #import <CoreLocation/CoreLocation.h>
 
-typedef void (^PhotoFetcherSuccessBlock)(NSArray *photos);
+#import "AFNetworking.h"
+#import "FlickrData.h"
+
+typedef void (^PhotoFetcherSuccessBlock)(FlickrData *data);
 typedef void (^PhotoFetcherErrorBlock)(NSURLSessionDataTask *task, NSError *error);
 
 @interface PhotoFetcher : AFHTTPSessionManager

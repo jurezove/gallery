@@ -7,7 +7,7 @@
 //
 
 #import "GalleryViewController.h"
-#import "Photo.h"
+#import "FlickrData.h"
 #import "PhotoFetcher.h"
 
 #import "PhotoCollectionViewCell.h"
@@ -23,7 +23,7 @@
 
 @interface GalleryViewController ()
 
-@property NSArray *photos;
+@property FlickrData *flickrData;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
@@ -79,22 +79,25 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [self updateToNearby:NO];
+    [self setupLocationButton];
+    [self.view addSubview:self.collectionView];
+    [self.collectionView addSubview:self.refreshControl];
+}
+
+- (void)setupLocationButton {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Location"]
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(toggleNearbyPhotos)];
-    
-    [self.view addSubview:self.collectionView];
-    [self.collectionView addSubview:self.refreshControl];
-    [self reload];
 }
 
 #pragma mark - Image Fetching
 
 - (void)reload {
     self.page = 1;
-    [self fetchBirthdayImages];
+    [self fetchBirthdayPhotos];
 }
 
 - (void)finishedFetchingPhotos {
@@ -103,17 +106,17 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
     self.isLoading = NO;
 }
 
-- (void)fetchBirthdayImages {
+- (void)fetchBirthdayPhotos {
     self.isLoading = YES;
     if (self.nearbyPhotos && CLLocationCoordinate2DIsValid(self.lastCoordinate)) {
         [[PhotoFetcher sharedFetcher] fetchFlickrImagesWithTags:@[@"birthday"]
                                                  withCoordinate:self.lastCoordinate
                                                         andPage:self.page
-                                                        success:^(NSArray *photos) {
+                                                        success:^(FlickrData *newData) {
                                                             if (self.page == 1)
-                                                                self.photos = photos;
+                                                                self.flickrData = newData;
                                                             else
-                                                                self.photos = [self.photos arrayByAddingObjectsFromArray:photos];
+                                                                [self.flickrData appendPhotos:newData.photos];
                                                             
                                                             [self finishedFetchingPhotos];
                                                         } error:^(NSURLSessionDataTask *task, NSError *error) {
@@ -123,11 +126,11 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
     } else {
         [[PhotoFetcher sharedFetcher] fetchFlickrImagesWithTags:@[@"birthday"]
                                                         andPage:self.page
-                                                        success:^(NSArray *photos) {
+                                                        success:^(FlickrData *newData) {
                                                             if (self.page == 1)
-                                                                self.photos = photos;
+                                                                self.flickrData = newData;
                                                             else
-                                                                self.photos = [self.photos arrayByAddingObjectsFromArray:photos];
+                                                                [self.flickrData appendPhotos:newData.photos];
                                                             
                                                             [self finishedFetchingPhotos];
                                                         } error:^(NSURLSessionDataTask *task, NSError *error) {
@@ -144,16 +147,26 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.photos.count + 1;
+    return MIN(self.flickrData.photos.count + 1, self.flickrData.count);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= self.photos.count) {
+    if (indexPath.row >= self.flickrData.count && !self.isLoading && indexPath.row == 0) {
+        // No results, empty cell
+        return [collectionView dequeueReusableCellWithReuseIdentifier:EmptyCollectionViewCellIdentifier forIndexPath:indexPath];
+    } else if (indexPath.row >= self.flickrData.photos.count) {
+        // Loading cell
+        if (!self.isLoading && self.flickrData.photos.count > 0) {
+            // Download new page of photos
+            self.page += 1;
+            [self fetchBirthdayPhotos];
+        }
         return [collectionView dequeueReusableCellWithReuseIdentifier:LoadingCollectionViewCellIdentifier forIndexPath:indexPath];
     } else {
+        // Photo cell
         PhotoCollectionViewCell *collectionViewCell = (PhotoCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:PhotoCollectionViewCellIdentifier                                                                                         forIndexPath:indexPath];
 
-        Photo *photo = self.photos[indexPath.row];
+        Photo *photo = self.flickrData.photos[indexPath.row];
         [collectionViewCell.imageView setImageWithURL:[NSURL URLWithString:photo.url] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
         
         return collectionViewCell;
@@ -164,17 +177,9 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
     return CGSizeMake(80, 80);
 }
 
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= self.photos.count && !self.isLoading && self.photos.count > 0) {
-        // Download new page of images
-        self.page += 1;
-        [self fetchBirthdayImages];
-    }
-}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     DetailViewController *detailViewController = [[DetailViewController alloc] init];
-    detailViewController.photos = self.photos;
+    detailViewController.photos = self.flickrData.photos;
     detailViewController.selectedPhotoIndex = indexPath.row;
     [self.navigationController pushViewController:detailViewController animated:YES];    
 }
@@ -194,20 +199,27 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
     } else {
         self.title = @"Birthday Photos";
         self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"Location"];
+        [self emptyCollectionView];
+        [self reload];
     }
+}
+
+- (void)emptyCollectionView {
+    self.flickrData.photos = @[];
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Location
 
 - (void)initiateLocationFetch {
-    self.photos = @[];
-    [self.collectionView reloadData];
+    [self emptyCollectionView];
     [self.locationManager startUpdatingLocation];
 }
 
 - (void)tryGettingCurrentLocation {
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8"))
         [self.locationManager requestWhenInUseAuthorization];
+    
     if ([CLLocationManager locationServicesEnabled])
         [self initiateLocationFetch];
 }

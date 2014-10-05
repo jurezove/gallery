@@ -11,6 +11,5 @@
 
 @interface GalleryViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate>
 
-
 @end
 

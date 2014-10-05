@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GalleryViewController.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @interface AppDelegate ()
 
@@ -53,6 +54,7 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"GillSans" size:18.0f]}];
     [[UINavigationBar appearance] setTintColor:[UIColor grayColor]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"GillSans" size:18.0f], NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 }
 
 @end

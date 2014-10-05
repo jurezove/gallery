@@ -12,7 +12,7 @@
 @interface FlickrPhoto : Photo
 
 /*
- *  For demo purposes, I'll implement just the necessary attributes.
+ *  For demo purposes, I'll implement only the necessary attributes.
  */
 
 @property (nonatomic, strong) NSString *photoID;
