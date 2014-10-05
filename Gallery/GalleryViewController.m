@@ -106,6 +106,15 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
     self.isLoading = NO;
 }
 
+- (void)displayErrorAlert {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"An error occurred. :-( Please try again later."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Ok"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)fetchBirthdayPhotos {
     self.isLoading = YES;
     if (self.nearbyPhotos && CLLocationCoordinate2DIsValid(self.lastCoordinate)) {
@@ -121,6 +130,7 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
                                                             [self finishedFetchingPhotos];
                                                         } error:^(NSURLSessionDataTask *task, NSError *error) {
                                                             NSLog(@"Error: %@\n With url: %@", error, task.response.URL);
+                                                            [self displayErrorAlert];
                                                             [self finishedFetchingPhotos];
                                                         }];
     } else {
@@ -135,6 +145,7 @@ static NSString *EmptyCollectionViewCellIdentifier =    @"EmptyCollectionViewCel
                                                             [self finishedFetchingPhotos];
                                                         } error:^(NSURLSessionDataTask *task, NSError *error) {
                                                             NSLog(@"Error: %@\n With url: %@", error, task.response.URL);
+                                                            [self displayErrorAlert];
                                                             [self finishedFetchingPhotos];
                                                         }];
     }
