@@ -11,5 +11,6 @@
 @interface Photo : NSObject
 
 - (NSString *)url;
+- (NSString *)title;
 
 @end

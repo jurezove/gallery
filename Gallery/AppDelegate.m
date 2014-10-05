@@ -22,6 +22,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
+    [self setupAppearance];
     return YES;
 }
 
@@ -45,6 +46,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)setupAppearance {
+    // Some eye candy
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"GillSans" size:18.0f]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor grayColor]];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"GillSans" size:18.0f], NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
 }
 
 @end

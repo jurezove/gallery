@@ -15,4 +15,9 @@
     return nil;
 }
 
+- (NSString *)title {
+    NSAssert(NO, @"This method should be overriden.");
+    return nil;
+}
+
 @end

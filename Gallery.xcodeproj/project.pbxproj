@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		250C846919E1C2D800B4043E /* GillSans.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 250C846819E1C2D800B4043E /* GillSans.ttc */; };
 		250F54AB19E1865500FFD2C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250F54AA19E1865500FFD2C9 /* main.m */; };
 		250F54AE19E1865500FFD2C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 250F54AD19E1865500FFD2C9 /* AppDelegate.m */; };
 		250F54B119E1865500FFD2C9 /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250F54B019E1865500FFD2C9 /* GalleryViewController.m */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		03743E964B1F3F4E1CB7D570 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		250C846819E1C2D800B4043E /* GillSans.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = GillSans.ttc; sourceTree = "<group>"; };
 		250F54A519E1865500FFD2C9 /* Gallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		250F54A919E1865500FFD2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		250F54AA19E1865500FFD2C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -90,6 +92,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		250C846719E1C28F00B4043E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				250C846819E1C2D800B4043E /* GillSans.ttc */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		250F549C19E1865500FFD2C9 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +133,7 @@
 				250F54B219E1865500FFD2C9 /* DetailViewController.h */,
 				250F54B319E1865500FFD2C9 /* DetailViewController.m */,
 				250F54B819E1865500FFD2C9 /* Images.xcassets */,
+				250C846719E1C28F00B4043E /* Fonts */,
 				250F54A819E1865500FFD2C9 /* Supporting Files */,
 			);
 			path = Gallery;
@@ -279,6 +290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				250C846919E1C2D800B4043E /* GillSans.ttc in Resources */,
 				250F54B919E1865500FFD2C9 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

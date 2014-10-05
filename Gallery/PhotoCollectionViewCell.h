@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PhotoCollectionViewCell : UICollectionViewCell
+@interface PhotoCollectionViewCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 
-//@property (nonatomic, strong) NSString *imageURL;
-//- (void)updateCell;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic) BOOL isScallable;
 
 @end

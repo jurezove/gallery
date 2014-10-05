@@ -9,10 +9,14 @@
 #import "GalleryViewController.h"
 #import "Photo.h"
 #import "PhotoFetcher.h"
+
 #import "PhotoCollectionViewCell.h"
 #import "LoadingCollectionViewCell.h"
+
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+
+#import "DetailViewController.h"
 
 @interface GalleryViewController ()
 
@@ -78,7 +82,6 @@ static NSString *LoadingCollectionViewCellIdentifier =  @"LoadingCollectionViewC
 
 - (void)fetchBirthdayImages {
     self.isLoading = YES;
-    NSLog(@"Fetching page: %ld", (long)self.page);
     [[PhotoFetcher sharedFetcher] fetchFlickrImagesWithTags:@[@"birthday"]
                                                     andPage:self.page
                                                     success:^(NSArray *photos) {
@@ -127,6 +130,13 @@ static NSString *LoadingCollectionViewCellIdentifier =  @"LoadingCollectionViewC
         self.page += 1;
         [self fetchBirthdayImages];
     }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    DetailViewController *detailViewController = [[DetailViewController alloc] init];
+    detailViewController.photos = self.photos;
+    detailViewController.selectedPhotoIndex = indexPath.row;
+    [self.navigationController pushViewController:detailViewController animated:YES];    
 }
 
 @end
