@@ -40,4 +40,12 @@
     }];
 }
 
+- (void)fetchFlickrImagesWithTags:(NSArray *)tags withCoordinate:(CLLocationCoordinate2D)coordinate andPage:(NSInteger)page success:(PhotoFetcherSuccessBlock)successBlock error:(PhotoFetcherErrorBlock)errorBlock {
+    [self GET:[FlickrAPI urlForSearch] parameters:[FlickrAPI paramsForSearchByTags:tags withCoordinate:coordinate andPage:page] success:^(NSURLSessionDataTask *task, id responseObject) {
+        successBlock([FlickrPhoto photoArrayWithResponseDictionary:responseObject]);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        errorBlock(task, error);
+    }];
+}
+
 @end

@@ -22,4 +22,10 @@ static NSString *const FlickrAPIKey =           @"5bef90c42d5be4a6307b56bbb7d650
     return @{@"api_key" : FlickrAPIKey, @"method" : @"flickr.photos.search", @"tags" : encodedTags, @"format" : @"json", @"nojsoncallback" : @"1", @"page" : @(page) };
 }
 
++ (NSDictionary *)paramsForSearchByTags:(NSArray *)tags withCoordinate:(CLLocationCoordinate2D)coordinate andPage:(NSInteger)page {
+    NSDictionary *dict = [[self paramsForSearchByTags:tags andPage:page] mutableCopy];
+    [dict setValuesForKeysWithDictionary:@{ @"lat" : @(coordinate.latitude), @"lon" : @(coordinate.longitude) }];
+    return dict;
+}
+
 @end

@@ -11,10 +11,12 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface FlickrAPI : NSObject
 
 + (NSString *)urlForSearch;
 + (NSDictionary *)paramsForSearchByTags:(NSArray *)tags andPage:(NSInteger)page;
++ (NSDictionary *)paramsForSearchByTags:(NSArray *)tags withCoordinate:(CLLocationCoordinate2D)coordinate andPage:(NSInteger)page;
 
 @end

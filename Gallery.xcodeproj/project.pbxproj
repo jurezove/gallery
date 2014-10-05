@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		250C846919E1C2D800B4043E /* GillSans.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 250C846819E1C2D800B4043E /* GillSans.ttc */; };
+		250C846C19E1D4F700B4043E /* EmptyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 250C846B19E1D4F700B4043E /* EmptyCollectionViewCell.m */; };
 		250F54AB19E1865500FFD2C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250F54AA19E1865500FFD2C9 /* main.m */; };
 		250F54AE19E1865500FFD2C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 250F54AD19E1865500FFD2C9 /* AppDelegate.m */; };
 		250F54B119E1865500FFD2C9 /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250F54B019E1865500FFD2C9 /* GalleryViewController.m */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		03743E964B1F3F4E1CB7D570 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		250C846819E1C2D800B4043E /* GillSans.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = GillSans.ttc; sourceTree = "<group>"; };
+		250C846A19E1D4F700B4043E /* EmptyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCollectionViewCell.h; sourceTree = "<group>"; };
+		250C846B19E1D4F700B4043E /* EmptyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyCollectionViewCell.m; sourceTree = "<group>"; };
 		250F54A519E1865500FFD2C9 /* Gallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		250F54A919E1865500FFD2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		250F54AA19E1865500FFD2C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 				25D5A69F19E1A39000A60726 /* PhotoCollectionViewCell.m */,
 				25D5A6A419E1AF2400A60726 /* LoadingCollectionViewCell.h */,
 				25D5A6A519E1AF2400A60726 /* LoadingCollectionViewCell.m */,
+				250C846A19E1D4F700B4043E /* EmptyCollectionViewCell.h */,
+				250C846B19E1D4F700B4043E /* EmptyCollectionViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -259,6 +264,11 @@
 					250F54A419E1865500FFD2C9 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = KP8HAR5Z6F;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					250F54C019E1865500FFD2C9 = {
 						CreatedOnToolsVersion = 6.0;
@@ -351,6 +361,7 @@
 				25D5A69819E198D900A60726 /* FlickrAPI.m in Sources */,
 				250F54B419E1865500FFD2C9 /* DetailViewController.m in Sources */,
 				25D5A6A019E1A39000A60726 /* PhotoCollectionViewCell.m in Sources */,
+				250C846C19E1D4F700B4043E /* EmptyCollectionViewCell.m in Sources */,
 				25D5A69519E1965700A60726 /* PhotoFetcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
+#import <CoreLocation/CoreLocation.h>
 
 typedef void (^PhotoFetcherSuccessBlock)(NSArray *photos);
 typedef void (^PhotoFetcherErrorBlock)(NSURLSessionDataTask *task, NSError *error);
@@ -17,5 +18,6 @@ typedef void (^PhotoFetcherErrorBlock)(NSURLSessionDataTask *task, NSError *erro
 + (PhotoFetcher *)sharedFetcher;
 
 - (void)fetchFlickrImagesWithTags:(NSArray *)tags andPage:(NSInteger)page success:(PhotoFetcherSuccessBlock)successBlock error:(PhotoFetcherErrorBlock)errorBlock;
+- (void)fetchFlickrImagesWithTags:(NSArray *)tags withCoordinate:(CLLocationCoordinate2D)coordinate andPage:(NSInteger)page success:(PhotoFetcherSuccessBlock)successBlock error:(PhotoFetcherErrorBlock)errorBlock;
 
 @end
